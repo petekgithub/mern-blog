@@ -27,7 +27,14 @@ app.post("/register", async (req, res) => {
   }
 });
 
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  const userDoc = await User.findOne({ username });
+  const passOk = bcrypt.compareSync(password, userDoc.password);
+  res.json(passOk);
+});
+
 app.listen(4000);
 
-// username: blog password: LZazom05mX4D5j1e
-// mongodb+srv://blog:LZazom05mX4D5j1e@cluster0.e9tva6e.mongodb.net/?retryWrites=true&w=majority
+// userDoc.password : from database
+// password : from our request
