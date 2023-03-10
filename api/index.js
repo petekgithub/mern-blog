@@ -88,8 +88,7 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
 });
 
 app.get("/post", async (req, res) => {
-  const posts = await Post.find();
-  res.json(posts);
+  res.json(await Post.find().populate("author", ["username"]));
 });
 
 app.listen(4000);
